@@ -1,0 +1,93 @@
+<html ENCODING="UTF-8">
+    <head>
+        <title>Text des Titels</title>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+    </head>
+<body>
+    <div class="text">
+        <h1 class="warn-title">Du hast versucht auf illegales Material zuzugreifen.</h1>
+        <p class="warn-text">
+            Deine IP Adresse und GeoLocation wurde geloggt und an Bundesverfassungsschutz weitergegeben.
+        </p>
+        <p class="warn-text">
+            Kooperieren sie um keine umständlichkeiten hervorzurufen.
+        </p>
+    </div>
+    <div class="images">
+        <img class="brd-logo logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Flag_of_Germany_%28state%29.svg/1920px-Flag_of_Germany_%28state%29.svg.png">
+        <img class="bsi-logo logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Bundesamt_f%C3%BCr_Sicherheit_in_der_Informationstechnik_Logo.svg/1920px-Bundesamt_f%C3%BCr_Sicherheit_in_der_Informationstechnik_Logo.svg.png">
+        <img class="bnd-logo logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/BND_Logo_neu.svg/1920px-BND_Logo_neu.svg.png">
+        <img class="bfs-logo logo" src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Emblem_of_the_BfV.png">
+        <img class="eun-logo logo" src="https://europainfo.at/wp-content/uploads/2018/11/flag_yellow_high-1024x683.jpg.webp">
+
+    </div>
+
+    <style>
+        .images{
+            text-align: center;
+        }
+        .eun-logo{
+            width: 14%;
+            margin-left: 75px;
+        }
+        .brd-logo{
+            width: 15.5%;
+            margin-right: 35px;
+        }
+        .bfs-logo{
+            width: 10%;
+        }
+        .bnd-logo, .bsi-logo{
+            margin-top: 160px;
+            width: 20%;
+        }
+        .warn-text, .warn-title{
+            text-align: center;
+            font-family: 'Roboto Condensed', sans-serif;
+            color: #ffffff;
+        }
+        .text{
+            margin-top: 70px;
+        }
+        *{
+            background-color: #1e1eff;
+        }
+    </style>
+    <script>
+        const myAudioContext = new AudioContext();
+        function beep(duration, frequency, volume){
+            return new Promise((resolve, reject) => {
+                duration = duration || 200;
+                frequency = frequency || 440;
+                volume = volume || 100;
+
+                try{
+                    let oscillatorNode = myAudioContext.createOscillator();
+                    let gainNode = myAudioContext.createGain();
+                    oscillatorNode.connect(gainNode);
+
+                    oscillatorNode.frequency.value = frequency;
+
+                    oscillatorNode.type= "square";
+                    gainNode.connect(myAudioContext.destination);
+
+                    gainNode.gain.value = volume * 0.01;
+
+                    oscillatorNode.start(myAudioContext.currentTime);
+                    oscillatorNode.stop(myAudioContext.currentTime + duration * 0.001);
+
+                    oscillatorNode.onended = () => {
+                        resolve();
+                    };
+                }catch(error){
+                    reject(error);
+                }
+            });
+        }
+
+        setTimeout(() => {  beep(10000, 670, 80); }, 300);
+
+    </script>
+</body>
+</html>
